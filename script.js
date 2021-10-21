@@ -5,6 +5,7 @@ function myPromise(status) {
     } else {
       reject('Failed');
       // throw new Error('Failed');
+      //reject or error that are dynamic in nature, manually thrown error goes to reject or catch block in case of async/await
     }
   });
 }
@@ -24,10 +25,17 @@ myPromise(false).then(noop, (status) => {
 // with async await
 async function asyncFunc(status) {
   try {
-    const value = await myPromise(status);
+    const value = await myPromise(status).then(
+      (d) => d,
+      (e) => {
+        console.log('e', e); // this shows if reject is handled too, it will go to catch block
+        return 'hello'; // reject can be forwarded to catch with modification
+      }
+    );
     console.log('async', value);
   } catch (e) {
     console.log('async', e);
+    // console.log('async', e);// e.message should give the error message
   }
 }
 

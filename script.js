@@ -4,6 +4,7 @@ function myPromise(status) {
       resolve('Passed');
     } else {
       reject('Failed');
+      // throw new Error('Failed');
     }
   });
 }
@@ -31,4 +32,4 @@ async function asyncFunc(status) {
 }
 
 asyncFunc(true);
-asyncFunc(false);
+asyncFunc(false); // testing catch case
